@@ -65,8 +65,6 @@ class OrderList extends Component {
     this.setState({
       data: newData
     })
-    console.log(newData)
-    console.log(this.state.data)
   }
 }
 

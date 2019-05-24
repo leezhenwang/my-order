@@ -12,7 +12,6 @@ class OrderItem extends Component {
   }
   render() {//其他函数与render同级
     let {shop,product,price,picture,ifCommented} = this.props.data;
-    console.log(ifCommented)
     return (
       <div>
         <div className="orderItem">
@@ -74,7 +73,6 @@ class OrderItem extends Component {
     )
   }
   handleOpenEditArea = () =>{//保证this指向当前组件的实例
-    console.log('wjll')
     this.setState({
       editing: true
     })
