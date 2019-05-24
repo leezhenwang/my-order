@@ -29,6 +29,7 @@
   background: gray;
 }
 .orderItem_btn-red{
+  margin-bottom: 10px;
   border: 0;
   border-radius: 5px;
   background: red;
@@ -57,4 +58,11 @@
   margin: 10px 0;
   padding-left: 10px;
   text-align: left;
+}
+.orderItem_star{
+  margin-left: 10px;
+  color: grey;
+}
+.orderItem_star-light{
+  color: red;
 }

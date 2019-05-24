@@ -6,12 +6,13 @@ class OrderItem extends Component {
     super(props)
     this.state={
       editing: false,
-      stars: 0,
-      comment: ''
+      stars: props.data.stars || 0,
+      comment: props.data.comment || '',
     }
   }
-  render() {
-    const {shop,product,price,picture,isCommented} = this.props.data;
+  render() {//其他函数与render同级
+    let {shop,product,price,picture,ifCommented} = this.props.data;
+    console.log(ifCommented)
     return (
       <div>
         <div className="orderItem">
@@ -25,7 +26,7 @@ class OrderItem extends Component {
               <div className="orderItem_price">{price}</div>
               <div>
                 {
-                  isCommented ? (
+                  ifCommented ? (
                     <button className="orderItem_btn-gray">已评价</button>
                   ): (
                     <button className="orderItem_btn-red" 
@@ -47,11 +48,11 @@ class OrderItem extends Component {
         onChange={this.handleCommenChange} 
         value={this.state.comment}
         className="orderItem_comment"></textarea>
-        <div class="comment_stars_container">
+        <div className="comment_stars_container">
           评论星数：{this.renderStars()}
         </div>
-        <button className="orderItem_btn-red">提交</button>
-        <button className="orderItem_btn-gray">取消</button>
+        <button className="orderItem_btn-red" onClick={this.handleSubmitComment}>提交</button>
+        <button className="orderItem_btn-gray" onClick={this.handleCancelComment}>取消</button>
       </div>
     )
   }
@@ -61,18 +62,21 @@ class OrderItem extends Component {
       <div className="stars_container">
         {
           [1,2,3,4,5].map((item,index)=>{
-            const light = stars > item ? 'orderItem_star-light': ''
+            const light = stars >= item ? 'orderItem_star-light': ''
             return (
-              <span key={index} onClick={this.handleClickStars.bind(this,index)}>★</span>
+              <span key={index} 
+              className={'orderItem_star ' + light}
+              onClick={()=>this.handleClickStars(item)}>★</span>
             )
           })
         }
       </div>
     )
   }
-  handdleOpenEditArrea = () =>{//保证this指向当前组件的实例
+  handleOpenEditArea = () =>{//保证this指向当前组件的实例
+    console.log('wjll')
     this.setState({
-      editing: false
+      editing: true
     })
   }
   handleCommenChange = (e)=>{
@@ -84,6 +88,21 @@ class OrderItem extends Component {
     this.setState({
       stars: stars
     })
+  }
+  handleCancelComment= ()=>{
+    this.setState({
+      editing: false,
+      comment: this.props.data.comment || '',
+      stars: this.props.data.stars || 0,
+    })
+  }
+  handleSubmitComment = ()=>{
+    const {id} = this.props.data;
+    const {comment, stars} = this.state;
+    this.setState({
+      editing: false,
+    })
+    this.props.onSubmit(id,comment,stars)//调用父组件的函数
   }
 }
 
